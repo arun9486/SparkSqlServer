@@ -26,24 +26,26 @@ public class SparkThriftServerExample {
             System.out.println("Connection established");
 
             // Create table
-            String createTableSQL = "CREATE TABLE IF NOT EXISTS example_table1 (id INT, name STRING)";
+            String createTableSQL = "CREATE TABLE IF NOT EXISTS example_table (id INT, name STRING)";
             statement.execute(createTableSQL);
 
             // Insert rows
-            String insertRow1SQL = "INSERT INTO example_table1 VALUES (1, 'Alice')";
+            String insertRow1SQL = "INSERT INTO example_table VALUES (1, 'Alice')";
             statement.execute(insertRow1SQL);
 
-            String insertRow2SQL = "INSERT INTO example_table1 VALUES (2, 'Bob')";
+            String insertRow2SQL = "INSERT INTO example_table VALUES (2, 'Bob')";
             statement.execute(insertRow2SQL);
 
             // Query the table
-            String querySQL = "DESCRIBE example_table1";
+            String querySQL = "SELECT * FROM example_table";
             ResultSet resultSet = statement.executeQuery(querySQL);
 
             // Print the results
             while (resultSet.next()) {
                 System.out.println("Inside result set while");
-                System.out.println(resultSet.toString());
+                int id = resultSet.getInt("id");
+                String name = resultSet.getString("name");
+                System.out.println("ID: " + id + ", Name: " + name);
             }
 
         } catch (SQLException e) {
