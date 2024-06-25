@@ -16,7 +16,7 @@ public class Main {
     }
 
     private void initClusterWithThriftServer() {
-        //clusterManager.startCluster();
+        clusterManager.startCluster();
         clusterManager.startThriftServer();
     }
     
@@ -27,7 +27,7 @@ public class Main {
     private void test() throws Exception {
         System.out.println("Starting test");
         Main main = new Main();
-        main.initClusterWithThriftServer();
+        //main.initClusterWithThriftServer();
         
         SparkThriftServerManager sparkThriftServerManager = new SparkThriftServerManager();
         // create table
@@ -52,42 +52,48 @@ public class Main {
     // this is just for testing
     public static void main(String [] args) throws Exception {
         Main main = new Main();
-        main.test();
-        // main.initClusterWithThriftServer();
+        main.initClusterWithThriftServer();
 
-        // SparkThriftServerManager sparkThriftServerManager = new SparkThriftServerManager();
-        // Reader reader = new Reader(sparkThriftServerManager);
-        // reader.startReader();
+        MapStore mapStore = new MapStore();
+        Reader reader = new Reader(mapStore);
+        reader.startReader();
         
-        // Activity activity = new Activity();
+        Activity activity = new Activity(mapStore);
 
-        // while (true) {
-        //     Scanner scanner = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("Enter the command");
+            String command = scanner.nextLine();
+            System.out.println("Command received: " + command);
 
-        //     System.out.println("Enter the command");
-        //     String command = scanner.nextLine();
-        //     System.out.println("Command received: " + command);
-
-        //     if (command.contains("quit")) {
-        //         System.out.println("Exit command received...");
-        //         reader.exitReader();
-        //         Utils.delay(2000);
-        //         break;
-        //     } else if (command.contains("get")) {
-        //         System.out.println("Enter the commandId");
-        //         String commandId = scanner.nextLine();
-        //         System.out.println("CommandID received: " + commandId);
+            if (command.contains("quit")) {
+                System.out.println("Exit command received...");
+                reader.exitReader();
+                Utils.delay(2000);
+                break;
+            } else if (command.contains("get")) {
+                System.out.println("Enter the commandId");
+                String commandId = scanner.nextLine();
+                System.out.println("CommandID received: " + commandId);
                 
-        //         // System.out.println(activity.GetJob(commandId));
-        //         System.out.println("Get command completed");
-        //     } else {
-        //         System.out.println("Enter the command type");
-        //         String commandType = scanner.nextLine();
-        //         System.out.println("Command type received: " + commandType);
+                Job job = activity.GetJob(commandId);
+                System.out.println(job.getCommandId());
+                System.out.println(job.getCommand());
+                System.out.println(job.getState());
 
-        //         // activity.CreateJob(command, commandType);
-        //         System.out.println("Modify command completed");
-        //     }
-        // }
+                if (job.getCommand().contains("SELECT")) {
+                    System.out.println(job.getResult());
+                }
+            } else {
+                System.out.println("Enter the command type");
+                String commandType = scanner.nextLine();
+                System.out.println("Command type received: " + commandType);
+
+                String commandId = activity.CreateJob(command, commandType);
+                System.out.println("Modify command completed " + commandId);
+            }
+        }
+        
+        scanner.close();
     }
 }

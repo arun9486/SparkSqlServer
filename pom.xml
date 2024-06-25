@@ -46,7 +46,7 @@
                         <manifest>
                             <addClasspath>true</addClasspath>
                             <classpathPrefix>lib/</classpathPrefix>
-                            <mainClass>com.spark.sql.server.SparkSqlServer.SparkThriftServerExample</mainClass>
+                            <mainClass>com.spark.sql.server.SparkSqlServer.Main</mainClass>
                         </manifest>
                     </archive>
                 </configuration>

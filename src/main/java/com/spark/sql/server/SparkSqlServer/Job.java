@@ -41,6 +41,10 @@ public class Job {
     public String getCommandId() {
         return this.commandId;
     }
+
+    public String getResult() {
+        return this.result;
+    }
     
     public String getState() {
         return state;

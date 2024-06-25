@@ -22,6 +22,7 @@ public class MapStore {
         }
 
         this.store.put(commandId, job);
+        queue.add(job);
         
         return commandId;
     }

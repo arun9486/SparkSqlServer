@@ -30,6 +30,8 @@ public class ClusterManager {
     public void startThriftServer() {
         System.out.println("Starting of thrift server");
         runCommandAndWait(startThriftServerTargetString, "docker", "exec", masterContainerName, "sh", "-c", startThriftServerCommand);
+        System.out.println("Waiting for 20 seconds for thrift server to completely start");
+        Utils.delay(20000);
     }
     
     private void runCommandAndWait(final String output, String... startArguments) {
