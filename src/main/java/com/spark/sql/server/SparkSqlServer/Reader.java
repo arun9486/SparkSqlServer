@@ -60,20 +60,17 @@ public class Reader {
                 
                 if (job != null) {
                     System.out.println("Reader: Found command " + job.getCommand());
-		            String commandType = job.getCommandType();
 		            String command = job.getCommand();
 		            
-		            if (commandType.contains("MODIFY")) {
+		            if (command.contains("INSERT") || command.contains("CREATE")) {
 		                statement.execute(command);
-	                    job.setState("COMPLETE");
-		            } else {
+		            } else if (command.contains("SELECT")){
 	                    ResultSet resultSet = statement.executeQuery(command);
 	                    String result = convertResultSetToJson(resultSet);
-	
 	                    job.setResult(result);
-	                    job.setState("COMPLETE");
 	                }
-	                
+
+                    job.setState("COMPLETE");
                     System.out.println("Reader: Execution of command completed");
 	                this.mapStore.updateJob(job);
                 }

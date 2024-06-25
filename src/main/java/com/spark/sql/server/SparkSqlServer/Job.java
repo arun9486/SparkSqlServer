@@ -2,19 +2,16 @@ package com.spark.sql.server.SparkSqlServer;
 
 public class Job {
     private String command;
-    private String commandType;
     private String commandId;
     private String state;
     private String result;
     
     public Job(final String command, final String commandType) {
         this.command = command;
-        this.commandType = commandType;
     }
 
-    public Job(final String command, final String commandType, final String commandId) {
+    public Job(final String command, final String commandId) {
         this.command = command;
-        this.commandType = commandType;
         this.commandId = commandId;
     }
     
@@ -32,10 +29,6 @@ public class Job {
     
     public String getCommand() {
         return this.command;
-    }
-    
-    public String getCommandType() {
-        return this.commandType;
     }
     
     public String getCommandId() {

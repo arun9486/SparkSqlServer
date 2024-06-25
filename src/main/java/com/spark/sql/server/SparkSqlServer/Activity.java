@@ -7,8 +7,8 @@ public class Activity {
         this.mapStore = mapStore;
     }
 
-    public String CreateJob(final String command, final String commandType) {
-        Job job = new Job(command, commandType);
+    public String CreateJob(final String command) {
+        Job job = new Job(command);
         return this.mapStore.putJob(job);
     }
     

@@ -62,16 +62,16 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("Enter the command");
-            String command = scanner.nextLine();
-            System.out.println("Command received: " + command);
+            System.out.println("Enter api");
+            String api = scanner.nextLine();
+            System.out.println("API received: " + api);
 
-            if (command.contains("quit")) {
+            if (api.contains("quit")) {
                 System.out.println("Exit command received...");
                 reader.exitReader();
                 Utils.delay(2000);
                 break;
-            } else if (command.contains("get")) {
+            } else if (api.contains("get")) {
                 System.out.println("Enter the commandId");
                 String commandId = scanner.nextLine();
                 System.out.println("CommandID received: " + commandId);
@@ -84,13 +84,13 @@ public class Main {
                 if (job.getCommand().contains("SELECT")) {
                     System.out.println(job.getResult());
                 }
-            } else {
-                System.out.println("Enter the command type");
-                String commandType = scanner.nextLine();
-                System.out.println("Command type received: " + commandType);
-
-                String commandId = activity.CreateJob(command, commandType);
+            } else if (api.contains("put")) {
+                System.out.println("Enter the command");
+                String command = scanner.nextLine();
+                String commandId = activity.CreateJob(command);
                 System.out.println("Modify command completed " + commandId);
+            } else {
+                System.out.println("Unaknown command");
             }
         }
         
